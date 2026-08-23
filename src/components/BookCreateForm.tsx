@@ -52,7 +52,7 @@ const BookCreateForm = () => {
               <Input
                 {...field}
                 id={field.name}
-                placeholder="Enter Author Name"
+                placeholder="Enter Book Name"
                 aria-invalid={fieldState.invalid}
               />
 
@@ -85,8 +85,7 @@ const BookCreateForm = () => {
                   <SelectValue placeholder="Select a Author" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="auto">Auto</SelectItem>
-                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="AUTH001">Author Name</SelectItem>
                 </SelectContent>
               </Select>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
