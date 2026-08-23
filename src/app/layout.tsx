@@ -1,3 +1,4 @@
+import Header from "@/components/Layout/Header";
 import ThemeProvider from "@/components/Providers/ThemeProvider";
 import { geistMono, geistSans, interHeading } from "@/lib/fonts";
 import { LayoutProps } from "@/lib/types";
@@ -20,7 +21,9 @@ const RootLayout = ({ children }: LayoutProps) => {
           attribute={"class"}
           defaultTheme="dark"
           enableSystem={false}>
-          {children}
+          <Header />
+
+          <main className="mx-auto max-w-7xl"> {children}</main>
         </ThemeProvider>
       </body>
     </html>
