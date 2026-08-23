@@ -11,3 +11,18 @@ generator client {
 datasource db {
     provider = "sqlite"
 }
+
+model Author {
+    id      String @id @default(uuid())
+    name    String
+    subject String
+    books   Book[]
+}
+
+model Book {
+    id       String @id @default(uuid())
+    name     String
+    image    String @unique
+    author   Author @relation(fields: [authorId], references: [id])
+    authorId String
+}
