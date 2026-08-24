@@ -1,9 +1,11 @@
 "use client";
 
 import { bookFormSchema, BookFormType } from "@/lib/zodSchema";
+import { createBook } from "@/server/createBook";
 import { Author } from "@generated/prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon, UserPlusIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "./shadcnui/button";
 import { CardContent, CardFooter } from "./shadcnui/card";
@@ -16,19 +18,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./shadcnui/select";
+import { toast } from "./shadcnui/toast";
 
 type BookCreateFormProps = {
   authors: Author[];
 };
 
 const BookCreateForm = ({ authors }: BookCreateFormProps) => {
+  const { push } = useRouter();
   const {
     handleSubmit,
     control,
     formState: { isSubmitting },
+    reset,
   } = useForm({
     resolver: zodResolver(bookFormSchema),
     defaultValues: {
+      image: "",
       name: "",
       authorId: "",
     },
@@ -37,7 +43,17 @@ const BookCreateForm = ({ authors }: BookCreateFormProps) => {
 
   const createBookHandler = async (uDATA: BookFormType) => {
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log(uDATA);
+    const { isSuccess, msg } = await createBook(uDATA);
+
+    if (isSuccess) {
+      toast.add({ title: msg, type: "success" });
+
+      reset();
+
+      push("/");
+    } else {
+      toast.add({ title: msg, type: "error" });
+    }
   };
 
   return (
@@ -46,6 +62,8 @@ const BookCreateForm = ({ authors }: BookCreateFormProps) => {
       className="grid gap-4"
       noValidate>
       <CardContent className="grid gap-4">
+        {/* Image */}
+
         {/* Name */}
         <Controller
           name="name"
