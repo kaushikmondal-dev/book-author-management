@@ -9,7 +9,11 @@ export const metadata: Metadata = {
 };
 
 const page = async () => {
-  const allBooks = await prisma.book.findMany();
+  const allBooks = await prisma.book.findMany({
+    include: {
+      author: true,
+    },
+  });
 
   if (allBooks.length === 0) {
     return (
@@ -26,7 +30,10 @@ const page = async () => {
   return (
     <section className="grid grid-cols-1 gap-x-4 gap-y-10 pt-20 md:grid-cols-2 xl:grid-cols-3">
       {allBooks.map((book) => (
-        <BookCard key={book.id} />
+        <BookCard
+          key={book.id}
+          book={book}
+        />
       ))}
     </section>
   );

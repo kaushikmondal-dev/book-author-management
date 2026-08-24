@@ -1,5 +1,7 @@
+import { BookGetPayload } from "@generated/prisma/models";
 import { Trash2Icon, UserPenIcon } from "lucide-react";
 import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "./shadcnui/avatar";
 import { Badge } from "./shadcnui/badge";
 import { Button, buttonVariants } from "./shadcnui/button";
 import {
@@ -10,15 +12,34 @@ import {
   CardTitle,
 } from "./shadcnui/card";
 
-const BookCard = () => {
+type BookCardProps = {
+  book: BookGetPayload<{
+    include: {
+      author: true;
+    };
+  }>;
+};
+
+const BookCard = ({ book }: BookCardProps) => {
   return (
-    <Card>
+    <Card className="w-sm">
+      <div className="grid place-items-center">
+        <Avatar className="size-64">
+          <AvatarImage src={`/${book.image}`} />
+          <AvatarFallback>{book.name}</AvatarFallback>
+        </Avatar>
+      </div>
       <CardHeader>
-        <CardTitle className="text-center text-2xl">Book Name</CardTitle>
+        <CardTitle className="text-center text-3xl">{book.name}</CardTitle>
       </CardHeader>
-      <CardContent className="flex place-items-center items-center justify-center space-y-5 text-lg">
-        <span>
-          Author Name <Badge variant="secondary">Badge</Badge>
+      <CardContent className="flex place-items-center items-center justify-center text-lg">
+        <span className="flex items-center gap-3">
+          {book.author.name}
+          <Badge
+            className="text-xl"
+            variant="default">
+            {book.author.subject}
+          </Badge>
         </span>
       </CardContent>
       <CardFooter className="grid grid-cols-2 gap-10">
