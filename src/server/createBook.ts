@@ -3,11 +3,33 @@
 import prisma from "@/lib/dbClient/prisma";
 import { BookFormType } from "@/lib/zodSchema";
 import { revalidatePath } from "next/cache";
+import sharp from "sharp";
 
-export const createBook = async (uDATA: BookFormType) => {
+export const createBook = async (uDATA: BookFormType, imgFile: File) => {
   try {
+    const imageName = `${crypto.randomUUID()}.jpeg`;
+
+    const imageArrayBuffer = await imgFile.arrayBuffer();
+
+    await sharp(imageArrayBuffer)
+      .resize({
+        width: 256,
+        height: 256,
+      })
+      .jpeg({
+        mozjpeg: true,
+        quality: 97,
+      })
+      .toFile(`./public/uploads/${imageName}`);
+
+    const imageUrl = `uploads/${imageName}`;
+
     await prisma.book.create({
-      data: uDATA,
+      data: {
+        name: uDATA.name,
+        image: imageUrl,
+        authorId: uDATA.authorId,
+      },
     });
 
     revalidatePath("/");

@@ -21,5 +21,3 @@ export const bookFormSchema = z.object({
 });
 
 export type BookFormType = z.infer<typeof bookFormSchema>;
-
-//  image: z.string().min(1, { error: "Image URL is required." }),
