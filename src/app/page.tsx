@@ -15,7 +15,9 @@ const page = async () => {
     return (
       <section className="grid h-dvh place-items-center">
         <Card className="w-sm">
-          <CardContent className="text-xl">No Books Found 😒</CardContent>
+          <CardContent className="text-center text-2xl">
+            No Books Found 😒
+          </CardContent>
         </Card>
       </section>
     );

@@ -34,7 +34,6 @@ const BookCreateForm = ({ authors }: BookCreateFormProps) => {
   } = useForm({
     resolver: zodResolver(bookFormSchema),
     defaultValues: {
-      image: "",
       name: "",
       authorId: "",
     },

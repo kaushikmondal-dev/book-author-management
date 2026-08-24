@@ -22,7 +22,7 @@ model Author {
 model Book {
     id       String @id @default(uuid())
     name     String
-    image    String @unique
+    //image    String @unique
     author   Author @relation(fields: [authorId], references: [id])
     authorId String
 }
