@@ -1,8 +1,10 @@
 "use client";
 
 import { authorFormSchema, AuthorFormType } from "@/lib/zodSchema";
+import { createAuthor } from "@/server/createAuthor";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon, UserPlusIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "./shadcnui/button";
 import { CardContent, CardFooter } from "./shadcnui/card";
@@ -15,12 +17,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./shadcnui/select";
+import { toast } from "./shadcnui/toast";
 
 const AuthorCreateForm = () => {
+  const { push } = useRouter();
   const {
     handleSubmit,
     control,
     formState: { isSubmitting },
+    reset,
   } = useForm({
     resolver: zodResolver(authorFormSchema),
     defaultValues: {
@@ -32,7 +37,18 @@ const AuthorCreateForm = () => {
 
   const createTeacherHander = async (uDATA: AuthorFormType) => {
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log(uDATA);
+
+    const { isSuccess, msg } = await createAuthor(uDATA);
+
+    if (isSuccess) {
+      toast.add({ title: msg, type: "success" });
+
+      reset();
+
+      push("/create");
+    } else {
+      toast.add({ title: msg, type: "error" });
+    }
   };
 
   return (
