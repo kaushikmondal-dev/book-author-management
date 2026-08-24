@@ -1,6 +1,7 @@
 "use client";
 
 import { bookFormSchema, BookFormType } from "@/lib/zodSchema";
+import { Author } from "@generated/prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2Icon, UserPlusIcon } from "lucide-react";
 import { Controller, useForm } from "react-hook-form";
@@ -16,7 +17,11 @@ import {
   SelectValue,
 } from "./shadcnui/select";
 
-const BookCreateForm = () => {
+type BookCreateFormProps = {
+  authors: Author[];
+};
+
+const BookCreateForm = ({ authors }: BookCreateFormProps) => {
   const {
     handleSubmit,
     control,
@@ -61,7 +66,8 @@ const BookCreateForm = () => {
           )}
         />
 
-        {/* Subject */}
+        {/* Author */}
+
         <Controller
           name="authorId"
           control={control}
@@ -70,22 +76,37 @@ const BookCreateForm = () => {
               orientation="responsive"
               data-invalid={fieldState.invalid}>
               <FieldContent>
-                <FieldLabel htmlFor="form-rhf-select-language">
-                  Author
-                </FieldLabel>
+                <FieldLabel htmlFor={field.name}>Author</FieldLabel>
               </FieldContent>
               <Select
                 name={field.name}
                 value={field.value}
                 onValueChange={field.onChange}>
                 <SelectTrigger
-                  id="form-rhf-select-language"
+                  id={field.name}
                   aria-invalid={fieldState.invalid}
                   className="min-w-30">
-                  <SelectValue placeholder="Select a Author" />
+                  {/*this part show author name instance of author id*/}
+
+                  <SelectValue placeholder="Select an Author">
+                    {(value: string) => {
+                      const selectedAuthor = authors.find(
+                        (author) => author.id === value,
+                      );
+                      return selectedAuthor ?
+                          selectedAuthor.name
+                        : "Select an Author";
+                    }}
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="AUTH001">Author Name</SelectItem>
+                  {authors.map((author) => (
+                    <SelectItem
+                      key={author.id}
+                      value={author.id}>
+                      {author.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
