@@ -1,3 +1,5 @@
+import BookCard from "@/components/BookCard";
+import { Card, CardContent } from "@/components/shadcnui/card";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,7 +8,25 @@ export const metadata: Metadata = {
 };
 
 const page = () => {
-  return <section className="grid h-dvh place-items-center"></section>;
+  const allBooks = [1, 2];
+
+  if (allBooks.length === 0) {
+    return (
+      <section className="grid h-dvh place-items-center">
+        <Card className="w-sm">
+          <CardContent className="text-xl">No Books Found 😒</CardContent>
+        </Card>
+      </section>
+    );
+  }
+
+  return (
+    <section className="grid grid-cols-1 gap-x-4 gap-y-10 pt-20 md:grid-cols-2 xl:grid-cols-3">
+      <BookCard />
+      <BookCard />
+      <BookCard />
+    </section>
+  );
 };
 
 export default page;
