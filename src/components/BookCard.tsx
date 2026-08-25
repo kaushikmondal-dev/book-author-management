@@ -1,5 +1,6 @@
 import { BookGetPayload } from "@generated/prisma/models";
 import { UserPenIcon } from "lucide-react";
+import { Route } from "next";
 import Link from "next/link";
 import DeleteBookButton from "./DeleteBookButton";
 import { Avatar, AvatarFallback, AvatarImage } from "./shadcnui/avatar";
@@ -49,8 +50,8 @@ const BookCard = ({ book }: BookCardProps) => {
           bookImage={book.image}
         />
         <Link
-          className={buttonVariants({ variant: "secondary" })}
-          href={"/"}>
+          href={`/${book.id}` as Route}
+          className={buttonVariants({ variant: "secondary" })}>
           <UserPenIcon />
           Update
         </Link>
