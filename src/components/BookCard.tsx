@@ -1,9 +1,10 @@
 import { BookGetPayload } from "@generated/prisma/models";
-import { Trash2Icon, UserPenIcon } from "lucide-react";
+import { UserPenIcon } from "lucide-react";
 import Link from "next/link";
+import DeleteBookButton from "./DeleteBookButton";
 import { Avatar, AvatarFallback, AvatarImage } from "./shadcnui/avatar";
 import { Badge } from "./shadcnui/badge";
-import { Button, buttonVariants } from "./shadcnui/button";
+import { buttonVariants } from "./shadcnui/button";
 import {
   Card,
   CardContent,
@@ -43,10 +44,10 @@ const BookCard = ({ book }: BookCardProps) => {
         </span>
       </CardContent>
       <CardFooter className="grid grid-cols-2 gap-10">
-        <Button variant={"destructive"}>
-          <Trash2Icon />
-          Delete
-        </Button>
+        <DeleteBookButton
+          bookId={book.id}
+          bookImage={book.image}
+        />
         <Link
           className={buttonVariants({ variant: "secondary" })}
           href={"/"}>
