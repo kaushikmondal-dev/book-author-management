@@ -30,6 +30,8 @@ const page = async ({ params }: UpdatePageProps) => {
     return notFound();
   }
 
+  const allAuthors = await prisma.author.findMany();
+
   return (
     <section className="grid h-dvh grid-cols-2 place-items-center">
       <Card className="w-sm">
@@ -46,7 +48,10 @@ const page = async ({ params }: UpdatePageProps) => {
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Upadte Details</CardTitle>
         </CardHeader>
-        <UpdateDetails />
+        <UpdateDetails
+          book={book}
+          authors={allAuthors}
+        />
       </Card>
     </section>
   );
