@@ -41,8 +41,11 @@ const BookCreateForm = ({ authors }: BookCreateFormProps) => {
     resolver: zodResolver(bookFormSchema),
     defaultValues: {
       name: "",
-
       authorId: "",
+      language: "",
+      pages: "" as unknown as number,
+      price: "" as unknown as number,
+      publishedYear: "" as unknown as number,
     },
     mode: "all",
   });
@@ -169,6 +172,96 @@ const BookCreateForm = ({ authors }: BookCreateFormProps) => {
                   ))}
                 </SelectContent>
               </Select>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+
+        {/* Published Year */}
+        <Controller
+          name="publishedYear"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor={field.name}>Published Year</FieldLabel>
+
+              <Input
+                id={field.name}
+                type="number"
+                min="1"
+                placeholder="Enter published year"
+                value={field.value as string | number | undefined}
+                onChange={(e) => field.onChange(e.target.value)}
+                aria-invalid={fieldState.invalid}
+              />
+
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+
+        {/* Pages */}
+        <Controller
+          name="pages"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor={field.name}>Pages</FieldLabel>
+
+              <Input
+                id={field.name}
+                type="number"
+                min="1"
+                placeholder="Enter Number of Pages"
+                value={field.value as string | number | undefined}
+                onChange={(e) => field.onChange(e.target.value)}
+                aria-invalid={fieldState.invalid}
+              />
+
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+
+        {/* Price */}
+        <Controller
+          name="price"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor={field.name}>Price</FieldLabel>
+
+              <Input
+                id={field.name}
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Enter Price"
+                value={field.value as string | number | undefined}
+                onChange={(e) => field.onChange(e.target.value)}
+                aria-invalid={fieldState.invalid}
+              />
+
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </Field>
+          )}
+        />
+
+        {/* Language */}
+        <Controller
+          name="language"
+          control={control}
+          render={({ field, fieldState }) => (
+            <Field data-invalid={fieldState.invalid}>
+              <FieldLabel htmlFor={field.name}>Language</FieldLabel>
+
+              <Input
+                {...field}
+                id={field.name}
+                placeholder="Enter Book Language"
+                aria-invalid={fieldState.invalid}
+              />
+
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
             </Field>
           )}

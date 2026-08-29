@@ -20,9 +20,14 @@ model Author {
 }
 
 model Book {
-    id       String @id @default(uuid())
-    name     String
-    image    String @unique
+    id            String @id @default(uuid())
+    name          String
+    image         String @unique
+    price         Float  @default(0)
+    publishedYear Int    @default(0)
+    pages         Int    @default(1)
+    language      String @default("English")
+
     author   Author @relation(fields: [authorId], references: [id])
     authorId String
 }
