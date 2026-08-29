@@ -235,7 +235,7 @@ const BookCreateForm = ({ authors }: BookCreateFormProps) => {
                 id={field.name}
                 type="number"
                 min="0"
-                step="0.01"
+                step="1"
                 placeholder="Enter Price"
                 value={field.value as string | number | undefined}
                 onChange={(e) => field.onChange(e.target.value)}

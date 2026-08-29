@@ -4,7 +4,7 @@ import { bookFormSchema, BookFormType } from "@/lib/zodSchema";
 import { updateBookDetails } from "@/server/updateBookDetails";
 import { Author, Book } from "@generated/prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2Icon, UserPenIcon } from "lucide-react";
+import { Loader2Icon, RefreshCw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "./shadcnui/button";
@@ -237,7 +237,7 @@ const UpdateDetails = ({ book, authors }: UpdateDetailsProps) => {
               Updating Book...
             </>
           : <>
-              <UserPenIcon className="mr-2 h-4 w-4" />
+              <RefreshCw className="h-4 w-4" />
               Update
             </>
           }
