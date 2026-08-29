@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./shadcnui/card";
+import { Separator } from "./shadcnui/separator";
 
 type BookCardProps = {
   book: BookGetPayload<{
@@ -35,14 +36,28 @@ const BookCard = ({ book }: BookCardProps) => {
         <CardTitle className="text-center text-3xl">{book.name}</CardTitle>
       </CardHeader>
       <CardContent className="flex place-items-center items-center justify-center text-lg">
-        <span className="flex items-center gap-3">
+        <div className="flex items-center gap-3">
           {book.author.name}
           <Badge
             className="text-xl"
             variant="default">
             {book.author.subject}
           </Badge>
-        </span>
+        </div>
+        <Separator />
+        <div className="grid grid-cols-2 gap-10">
+          <div className="">
+            <p>
+              Price: {"\u20B9"}
+              {book.price}
+            </p>
+            <p>Page:{book.pages}</p>
+          </div>
+          <div className="">
+            <p>Published:{book.publishedYear}</p>
+            <p>Language:{book.language}</p>
+          </div>
+        </div>
       </CardContent>
       <CardFooter className="grid grid-cols-2 gap-10">
         <DeleteBookButton

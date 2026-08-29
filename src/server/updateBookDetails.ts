@@ -15,8 +15,11 @@ export const updateBookDetails = async (
       },
       data: {
         name: uDATA.name,
-
         authorId: uDATA.authorId,
+        language: uDATA.language,
+        pages: uDATA.pages,
+        price: uDATA.price,
+        publishedYear: uDATA.publishedYear,
       },
     });
 

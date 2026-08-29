@@ -29,6 +29,10 @@ export const createBook = async (uDATA: BookFormType, imgFile: File) => {
         name: uDATA.name,
         image: imageUrl,
         authorId: uDATA.authorId,
+        language: uDATA.language,
+        pages: uDATA.pages,
+        price: uDATA.price,
+        publishedYear: uDATA.publishedYear,
       },
     });
 
